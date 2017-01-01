@@ -1,0 +1,28 @@
+{
+  "name": "mimi-eventemitter",
+  "version": "1.0.0",
+  "description": "An other eventemitter",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FTAndy/mimi-eventemitter.git"
+  },
+  "keywords": [
+    "eventemitter",
+    "bowser",
+    "node"
+  ],
+  "author": "FTAndy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FTAndy/mimi-eventemitter/issues"
+  },
+  "homepage": "https://github.com/FTAndy/mimi-eventemitter#readme",
+  "devDependencies": {
+    "babel-jest": "^18.0.0",
+    "babel-polyfill": "^6.20.0"
+  }
+}
