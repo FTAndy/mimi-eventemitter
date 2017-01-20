@@ -1,11 +1,8 @@
-const MimiEventEmitter = require('MimiEventEmitter');
-
-beforeEach(() => {
-  const emitter = new MimiEventEmitter();
-})
+const MimiEventEmitter = require('../mimi-eventemitter');
 
 describe('MimiEventEmitter', function() {
   it('notifies listener when told to emit an event which that listener has registered for', function () {
+    const emitter = new MimiEventEmitter();
     const callback = jest.fn();
 
     emitter.addListener('type1', callback);
@@ -17,6 +14,7 @@ describe('MimiEventEmitter', function() {
 
   it(`notifies multiple listeners when told to emit an event which multiple
      listeners are registered for`, function () {
+       const emitter = new MimiEventEmitter();
     const callback1 = jest.fn();
     const callback2 = jest.fn();
 
@@ -30,6 +28,7 @@ describe('MimiEventEmitter', function() {
   });
 
   it('does not notify events of different types', function() {
+    const emitter = new MimiEventEmitter();
     const callback = jest.fn();
 
     emitter.addListener('type1', callback);
@@ -40,6 +39,7 @@ describe('MimiEventEmitter', function() {
   });
 
   it('does not notify of events after all listeners are removed', function() {
+    const emitter = new MimiEventEmitter();
     const callback = jest.fn();
 
     emitter.addListener('type1', callback);
@@ -51,6 +51,7 @@ describe('MimiEventEmitter', function() {
   });
 
   it('does not notify the listener of events after it is removed', function() {
+    const emitter = new MimiEventEmitter();
     const callback = jest.fn();
 
     const subscription = emitter.addListener('type1', callback);
@@ -63,6 +64,7 @@ describe('MimiEventEmitter', function() {
 
   it(`invokes only the listeners registered at the time the event was
     emitted, even if more were added`, function() {
+      const emitter = new MimiEventEmitter();
     const callback1 = jest.fn();
     const callback2 = jest.fn();
 
@@ -80,6 +82,7 @@ describe('MimiEventEmitter', function() {
 
   it(`does not invoke listeners registered at the time the event was
     emitted but later removed during the event loop`, function() {
+      const emitter = new MimiEventEmitter();
     const callback1 = jest.fn();
     const callback2 = jest.fn();
 
@@ -99,6 +102,7 @@ describe('MimiEventEmitter', function() {
 
   it(`does notify other handlers of events after a particular listener has
      been removed`, function() {
+       const emitter = new MimiEventEmitter();
     const callback = jest.fn();
 
     const subscription = emitter.addListener('type1', function() {});
@@ -111,6 +115,7 @@ describe('MimiEventEmitter', function() {
   });
 
   it('provides a way to register a listener that is invoked once', function() {
+    const emitter = new MimiEventEmitter();
     const callback = jest.fn();
 
     emitter.once('type1', callback);
@@ -123,6 +128,7 @@ describe('MimiEventEmitter', function() {
   });
 
   it('returns an array of listeners for an event', function() {
+    const emitter = new MimiEventEmitter();
     const listener1 = function() {};
     const listener2 = function() {};
     emitter.addListener('type1', listener1);
@@ -135,10 +141,12 @@ describe('MimiEventEmitter', function() {
   });
 
   it('returns an empty array when there are no listeners', function() {
+    const emitter = new MimiEventEmitter();
     expect(emitter.listeners('type1').length).toBe(0);
   });
 
   it('returns only the listeners for the registered event', function() {
+    const emitter = new MimiEventEmitter();
     const listener1 = function() {};
     const listener2 = function() {};
     emitter.addListener('type1', listener1);
@@ -150,6 +158,7 @@ describe('MimiEventEmitter', function() {
   });
 
   it('does not return removed listeners', function() {
+    const emitter = new MimiEventEmitter();
     const listener1 = function() {};
     const listener2 = function() {};
     const subscription1 = emitter.addListener('type1', listener1);
