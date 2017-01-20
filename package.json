@@ -1,8 +1,8 @@
 {
   "name": "mimi-eventemitter",
   "version": "1.0.0",
-  "description": "An other eventemitter",
-  "main": "index.js",
+  "description": "Jest an other eventemitter",
+  "main": "mimi-eventemitter.js",
   "scripts": {
     "test": "npm run jest"
   },
