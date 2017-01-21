@@ -59,26 +59,64 @@ function MimiEventEmitter() {
   }
 
   const getListener = (eventName) => {
-
+    return this.listeners.get(eventName) || []
   }
 
   const addListener = (eventName, fn, method) => {
+    if (typeof fn !== "function")
+      throw new Error("Handler must be a function")
+    if (!["prepend", "append"].includes(method))
+      throw new Error("method must be 'prepend' or 'append'")
 
+    if (this.listeners.has(eventName)) {
+      switch (method) {
+        case "prepend":
+          this.listeners.get(eventName).unshift(fn)
+          break;
+        case "append":
+          this.listeners.get(eventName).unshift(fn)
+          break;
+      }
+    } else {
+      this.listeners.set(eventName, [])
+    }
   }
 
   const removeListener = (eventName, fn) => {
+    if (typeof fn !== "function")
+      throw new Error("Handler must be a function")
 
+    if (this.listeners.has(eventName)) {
+      const events = this.listeners.get(eventName)
+      let index = events.indexOf(fn)
+      if (index === -1)
+        return
+      events.splice(index, 1)
+      index = events.indexOf(fn)
+      if (index !== -1)
+        removeListener(eventName, fn)
+      if (events.length === 0)
+        this.listeners.delete(eventName)
+    }
   }
 
-  const trigger = (event, ...args) => {
-
+  const trigger = (eventName, ...args) => {
+    if (this.listeners.has(eventName)) {
+      const events = this.listeners.get(eventName)
+      for (let i = 0; i < this.listeners.get(eventName).length; i += 1) {
+        events[i](...args)
+      }
+    }
   }
 
   const getAccount = (eventName) => {
-
+    return this.listeners.get(eventName).length
   }
 
-  const once = (eventName, fn) => {
-
+  const once = (eventName, fn, method) => {
+    addListener(eventName, (...args) => {
+      removeListener(eventName, fn)
+      fn(...args)
+    }, method)
   }
 }
