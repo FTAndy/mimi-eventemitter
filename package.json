@@ -4,7 +4,7 @@
   "description": "Jest an other eventemitter",
   "main": "mimi-eventemitter.js",
   "scripts": {
-    "test": "npm run jest"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "eslint": "^3.13.1",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jest": "^1.0.2"
+    "eslint-plugin-jest": "^1.0.2",
+    "jest": "^18.1.0"
   }
 }

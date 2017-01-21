@@ -31,11 +31,11 @@ function MimiEventEmitter() {
   }
 
   this.listeners = (eventName) => {
-    return this.listeners.get(eventName)
+    return this.listeners.get(eventName) || []
   }
 
   this.once = (eventName, fn) => {
-
+    once(eventName, fn, "append")
   }
 
   this.prependListener = (eventName, fn) => {
@@ -43,11 +43,13 @@ function MimiEventEmitter() {
   }
 
   this.prependOnceListener = (eventName, fn) => {
-
+    once(eventName, fn, "prepend")
   }
 
   this.removeAllListeners = (eventNames) => {
-
+    for (const eventName of eventNames) {
+      this.listeners.delete(eventName)
+    }
   }
 
   this.removeListener = (eventName, fn) => {
@@ -56,10 +58,6 @@ function MimiEventEmitter() {
 
   this.setMaxListeners = (n) => {
     this.maxListeners = n
-  }
-
-  const getListener = (eventName) => {
-    return this.listeners.get(eventName) || []
   }
 
   const addListener = (eventName, fn, method) => {
