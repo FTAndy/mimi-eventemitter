@@ -30,7 +30,7 @@ function MimiEventEmitter() {
     return this.listeners.get(eventName).length
   }
 
-  this.listeners = (eventName) => {
+  this.Listeners = (eventName) => {
     return this.listeners.get(eventName) || []
   }
 
@@ -47,8 +47,22 @@ function MimiEventEmitter() {
   }
 
   this.removeAllListeners = (eventNames) => {
-    for (const eventName of eventNames) {
-      this.listeners.delete(eventName)
+    if (!eventNames) {
+      for (const eventName of this.listeners.keys()) {
+        this.listeners.delete(eventName)
+      }
+      return
+    }
+
+    if (Array.isArray(eventNames)) {
+      for (const eventName of eventNames) {
+        this.listener.delete(eventName)
+      }
+      return
+    }
+
+    if (typeof eventNames === "string") {
+      this.listener.delete(eventNames)
     }
   }
 
@@ -72,11 +86,11 @@ function MimiEventEmitter() {
           this.listeners.get(eventName).unshift(fn)
           break;
         case "append":
-          this.listeners.get(eventName).unshift(fn)
+          this.listeners.get(eventName).push(fn)
           break;
       }
     } else {
-      this.listeners.set(eventName, [])
+      this.listeners.set(eventName, [fn])
     }
   }
 
@@ -101,7 +115,8 @@ function MimiEventEmitter() {
   const trigger = (eventName, ...args) => {
     if (this.listeners.has(eventName)) {
       const events = this.listeners.get(eventName)
-      for (let i = 0; i < this.listeners.get(eventName).length; i += 1) {
+      const eventLength = this.listeners.get(eventName).length
+      for (let i = 0; i < eventLength; i += 1) {
         events[i](...args)
       }
     }
@@ -112,9 +127,10 @@ function MimiEventEmitter() {
   }
 
   const once = (eventName, fn, method) => {
-    addListener(eventName, (...args) => {
-      removeListener(eventName, fn)
+    const handler = (...args) => {
+      removeListener(eventName, handler)
       fn(...args)
-    }, method)
+    }
+    addListener(eventName, handler, method)
   }
 }
